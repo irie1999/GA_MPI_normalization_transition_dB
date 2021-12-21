@@ -1,0 +1,3 @@
+compare_1= 307681
+std::pow(std::abs( S[t_m][i] - s[t_m][i] ), 2)= 307681
+compare_3= 0.000323546
