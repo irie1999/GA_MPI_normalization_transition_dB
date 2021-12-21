@@ -18,13 +18,13 @@ double fitting(double parameter_beta_1, double parameter_beta_2,
     time[0] = 6.16667;
     time[1] = 6.33333;
     time[2] = 6.5; 
-    beta[0] = 0.49366;
-    h_prime[0] = 77.69128;
+    beta[0] = 0.705229;  /*パラメタを規格化 beta_0 = 0.7 beta[0] = beta0 / beta_0*/
+    h_prime[0] = 1.035884;  /*パラメタを規格化 h_prime0 = 75*/
 
     for(int t = 0; t <= 2; t++){
         beta[t] = parameter_beta_2 * pow((time[t] - time[0]), 2) + parameter_beta_1 * (time[t] - time[0]) + beta[0];
         h_prime[t] = parameter_h_prime_2 * pow((time[t] - time[0]), 2) + parameter_h_prime_1 * (time[t] - time[0]) + h_prime[0];
-        cal_fdtd(beta[t], h_prime[t] * 1e3, t, Ei_tm); /*betaとh'を代入して電界を返す*/
+        cal_fdtd(0.7 * beta[t], 75.0 * h_prime[t] * 1e3, t, Ei_tm); /*betaとh'を代入して電界を返す*/
     }
     
     double sum;
@@ -48,7 +48,6 @@ double fitting(double parameter_beta_1, double parameter_beta_2,
     deallocate_memory2d(s);
     deallocate_memory2d(Ei_tm);
 
-    //v = 1.0 /( v * (1.0 / (GA_Nr * M)));
     v = GA_Nr * M / v;
 
     return v;
