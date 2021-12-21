@@ -21,7 +21,7 @@ int main(int argc, char **argv){
     /*MPI parameter*/
     const int Range { Number_of_Individual / size };
 
-    //std::cout << "rank= " << rank << ", size= " << size << std::endl;
+    std::cout << "rank= " << rank << ", size= " << size << std::endl;
     
     double **S = allocate_memory2d(3, 801, 0.0);  /*観測した電界強度の変化率*/
     double **parameter = allocate_memory2d(4, Number_of_Individual, 0.0);  /*各プロセスに渡すパラメタ*/
@@ -198,17 +198,17 @@ int main(int argc, char **argv){
         time[0] = 6.16667;
         time[1] = 6.33333;
         time[2] = 6.5; 
-        beta[0] = 0.49366;
-        h_prime[0] = 77.69128;
+        beta[0] = 0.70523;
+        h_prime[0] = 1.035884;
         for(int t = 1; t < 3; t++){
-        std::cout << "beta_" + std::to_string(t) << "= " << MAX_parameter[1][Number_of_Generation - 1] * pow((time[t] - time[0]),2) + MAX_parameter[0][Number_of_Generation - 1] * (time[t] - time[0]) + beta[0] << std::endl
-                  << "h_prime" + std::to_string(t)  << "= " << MAX_parameter[3][Number_of_Generation - 1] * pow((time[t] - time[0]),2) + MAX_parameter[2][Number_of_Generation - 1] * (time[t] - time[0]) + h_prime[0] << std::endl;
+        std::cout << "beta_" + std::to_string(t) << "= " << 0.7 * ( MAX_parameter[1][Number_of_Generation - 1] * pow((time[t] - time[0]),2) + MAX_parameter[0][Number_of_Generation - 1] * (time[t] - time[0]) + beta[0] ) << std::endl
+                  << "h_prime" + std::to_string(t)  << "= " << 75 * (MAX_parameter[3][Number_of_Generation - 1] * pow((time[t] - time[0]),2) + MAX_parameter[2][Number_of_Generation - 1] * (time[t] - time[0]) + h_prime[0] ) << std::endl;
         }
 
         std::ofstream ofs_1("../data/Answer" + std::to_string(Number_of_Generation) + ", " + std::to_string(Number_of_Individual) + ".dat");
         for(int t = 1; t < 3; t++){
-            ofs_1   << "Answer beta_" + std::to_string(t) << "= " << MAX_parameter[1][Number_of_Generation - 1] * pow((time[t] - time[0]),2) + MAX_parameter[0][Number_of_Generation - 1] * (time[t] - time[0]) + beta[0] << std::endl
-                    << "Answer h_prime" + std::to_string(t)  << "= " << MAX_parameter[3][Number_of_Generation -1] * pow((time[t] - time[0]),2) + MAX_parameter[2][Number_of_Generation -1] * (time[t] - time[0]) + h_prime[0] << std::endl << std::endl;
+            ofs_1   << "Answer beta_" + std::to_string(t) << "= " << 0.7 * ( MAX_parameter[1][Number_of_Generation - 1] * pow((time[t] - time[0]),2) + MAX_parameter[0][Number_of_Generation - 1] * (time[t] - time[0]) + beta[0] ) << std::endl
+                    << "Answer h_prime" + std::to_string(t)  << "= " << 75 * ( MAX_parameter[3][Number_of_Generation -1] * pow((time[t] - time[0]),2) + MAX_parameter[2][Number_of_Generation -1] * (time[t] - time[0]) + h_prime[0] ) << std::endl << std::endl;
         }
         for(int i = 0; i < Number_of_Generation; i++){
             ofs_1   << "parameter_beta_1= " << MAX_parameter[0][i] << std::endl << " beta_2= " << MAX_parameter[1][i]  << std::endl <<  " h_prime_1= " << MAX_parameter[2][i] << std::endl
